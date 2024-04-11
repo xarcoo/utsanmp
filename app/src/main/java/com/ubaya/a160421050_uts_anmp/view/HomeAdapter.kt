@@ -1,0 +1,41 @@
+package com.ubaya.a160421050_uts_anmp.view
+
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Callback
+import com.squareup.picasso.Picasso
+import com.ubaya.a160421050_uts_anmp.databinding.NewsItemBinding
+import com.ubaya.a160421050_uts_anmp.model.News
+import java.lang.Exception
+
+class HomeAdapter(val newsList:ArrayList<News>): RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+    class HomeViewHolder(var binding: NewsItemBinding):RecyclerView.ViewHolder(binding.root)
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
+        val binding = NewsItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return HomeViewHolder(binding)
+    }
+
+    override fun getItemCount(): Int {
+        return newsList.size
+    }
+
+    override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
+        val picasso = Picasso.Builder(holder.itemView.context)
+        picasso.listener { picasso, uri, exception ->
+            exception.printStackTrace()
+        }
+        picasso.build().load(newsList[position].image).into(holder.binding.imageView)
+
+        holder.binding.txtTitle.text = newsList[position].title
+        holder.binding.txtAuthor.text = newsList[position].author
+        holder.binding.txtDesc.text = newsList[position].description
+
+        holder.binding.btnRead.setOnClickListener {
+
+        }
+    }
+}
