@@ -3,7 +3,7 @@ package com.ubaya.a160421050_uts_anmp.model
 import com.google.gson.annotations.SerializedName
 
 data class User(
-    var id:String?,
+    var id:Int,
     var username:String?,
     var fname:String?,
     var lname:String?,

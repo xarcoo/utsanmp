@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_navigation"
-    app:startDestination="@id/homeFragment">
+    app:startDestination="@id/itemHome">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -24,10 +24,10 @@
             app:destination="@id/loginFragment" />
     </fragment>
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/itemHome"
         android:name="com.ubaya.a160421050_uts_anmp.view.HomeFragment"
-        android:label="fragment_home"
-        tools:layout="@layout/fragment_home" >
+        android:label="HOME"
+        tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/actionDetail"
             app:destination="@id/detailFragment" />
@@ -42,11 +42,17 @@
             app:argType="string" />
         <action
             android:id="@+id/actionHome"
-            app:destination="@id/homeFragment" />
+            app:destination="@id/itemHome"
+            app:popUpTo="@id/itemHome" />
     </fragment>
     <fragment
-        android:id="@+id/profileFragment"
+        android:id="@+id/itemProfile"
         android:name="com.ubaya.a160421050_uts_anmp.view.ProfileFragment"
-        android:label="fragment_profile"
+        android:label="PROFILE"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/itemHistory"
+        android:name="com.ubaya.a160421050_uts_anmp.view.HistoryFragment"
+        android:label="HISTORY"
+        tools:layout="@layout/fragment_history" />
 </navigation>
