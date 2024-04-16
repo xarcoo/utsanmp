@@ -6,24 +6,6 @@
     app:startDestination="@id/itemHome">
 
     <fragment
-        android:id="@+id/loginFragment"
-        android:name="com.ubaya.a160421050_uts_anmp.view.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login" >
-        <action
-            android:id="@+id/actionRegistration"
-            app:destination="@id/registrationFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/registrationFragment"
-        android:name="com.ubaya.a160421050_uts_anmp.view.RegistrationFragment"
-        android:label="fragment_registration"
-        tools:layout="@layout/fragment_registration" >
-        <action
-            android:id="@+id/actionLogin"
-            app:destination="@id/loginFragment" />
-    </fragment>
-    <fragment
         android:id="@+id/itemHome"
         android:name="com.ubaya.a160421050_uts_anmp.view.HomeFragment"
         android:label="HOME"
@@ -44,6 +26,12 @@
             android:id="@+id/actionHome"
             app:destination="@id/itemHome"
             app:popUpTo="@id/itemHome" />
+        <argument
+            android:name="page"
+            app:argType="integer" />
+        <action
+            android:id="@+id/actionPage"
+            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemProfile"

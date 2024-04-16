@@ -1,6 +1,7 @@
 package com.ubaya.a160421050_uts_anmp.model
 
 import com.google.gson.annotations.SerializedName
+import java.sql.Date
 
 data class User(
     var id:Int,
@@ -12,12 +13,20 @@ data class User(
 )
 
 data class News(
-    var id:String?,
+    var id:Int?,
     var title:String?,
     var author:String?,
     var description: String?,
-    @SerializedName("news")
-    var newsPage:List<String>?,
-    @SerializedName("images")
+    var image:String?,
+    var released_date:String?
+)
+
+data class Page(
+    var id:Int?,
+    var newsTitle:String?,
+    var author: String?,
+    var title:String?,
+    var descr:String?,
+    var news_id:Int?,
     var image:String?
 )

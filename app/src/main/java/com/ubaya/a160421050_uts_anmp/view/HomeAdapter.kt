@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
@@ -35,7 +36,14 @@ class HomeAdapter(val newsList:ArrayList<News>): RecyclerView.Adapter<HomeAdapte
         holder.binding.txtDesc.text = newsList[position].description
 
         holder.binding.btnRead.setOnClickListener {
-
+            val action = HomeFragmentDirections.actionDetail(newsList[position].id.toString(), 0)
+            Navigation.findNavController(it).navigate(action)
         }
+    }
+
+    fun updateNewsList(newNewsList:ArrayList<News>) {
+        newsList.clear()
+        newsList.addAll(newNewsList)
+        notifyDataSetChanged()
     }
 }

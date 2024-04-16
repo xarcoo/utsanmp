@@ -15,7 +15,6 @@ import androidx.lifecycle.get
 import com.squareup.picasso.Picasso
 import com.ubaya.a160421050_uts_anmp.R
 import com.ubaya.a160421050_uts_anmp.databinding.FragmentProfileBinding
-import com.ubaya.a160421050_uts_anmp.viewmodel.ProfileViewModel
 import com.ubaya.a160421050_uts_anmp.viewmodel.UserViewModel
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable

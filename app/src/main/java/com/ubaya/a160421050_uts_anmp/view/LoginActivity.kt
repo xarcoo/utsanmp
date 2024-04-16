@@ -35,7 +35,7 @@ class LoginActivity : AppCompatActivity() {
         val q = Volley.newRequestQueue(this@LoginActivity)
         val url = "http://10.0.2.2/ANMP/users.php"
         var stringRequest = StringRequest(
-            Request.Method.POST, url, Response.Listener<String> {
+            Request.Method.POST, url, {
                 Log.d("apiresult", it)
                 val obj = JSONObject(it)
                 if(obj.getString("result") == "OK") {
@@ -55,7 +55,7 @@ class LoginActivity : AppCompatActivity() {
                 }
                 Log.d("cekisiarray", accounts.toString())
             },
-            Response.ErrorListener {
+            {
                 Log.e("apiresult", it.message.toString())
             })
         q.add(stringRequest)
