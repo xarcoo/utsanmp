@@ -20,32 +20,29 @@ import org.json.JSONObject
 
 class DetailViewModel(application: Application) : AndroidViewModel(application) {
     val detailLD = MutableLiveData<ArrayList<Page>>()
+//    val detailAllLD = MutableLiveData<ArrayList<Page>>()
     val TAG = "volleyTag"
     private var queue: RequestQueue? = null
 
     fun fetch(id:String) {
         queue = Volley.newRequestQueue(getApplication())
-        val url2 = "http://10.0.2.2/ANMP/detail.php?id=${id}"
+        val url = "http://10.0.2.2/ANMP/detail.php?id=${id}"
 
-        val stringRequest2 = StringRequest(
-            Request.Method.GET, url2, {
+        val stringRequest = StringRequest(
+            Request.Method.GET, url, {
                 val sType = object : TypeToken<List<Page>>() {}.type
                 val result = Gson().fromJson<List<Page>>(it, sType)
 
                 detailLD.value = result as ArrayList<Page>
 
-                Log.d("Page Detail", it)
+                Log.d("Detail", it)
             },
             {
                 Log.e("apiresult", it.message.toString())
             }
         )
 
-        stringRequest2.tag = TAG
-        queue?.add(stringRequest2)
-    }
-
-    fun change(idnews:String, idpage:String) {
-
+        stringRequest.tag = TAG
+        queue?.add(stringRequest)
     }
 }
