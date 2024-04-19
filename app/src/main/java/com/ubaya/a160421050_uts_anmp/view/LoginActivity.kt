@@ -7,10 +7,8 @@ import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.ubaya.a160421050_uts_anmp.R
 import com.ubaya.a160421050_uts_anmp.databinding.ActivityLoginBinding
 import com.ubaya.a160421050_uts_anmp.model.User
 import org.json.JSONObject
