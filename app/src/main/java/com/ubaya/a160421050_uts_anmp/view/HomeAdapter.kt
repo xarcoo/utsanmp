@@ -36,7 +36,7 @@ class HomeAdapter(val newsList:ArrayList<News>): RecyclerView.Adapter<HomeAdapte
         holder.binding.txtDesc.text = newsList[position].description
 
         holder.binding.btnRead.setOnClickListener {
-            val action = HomeFragmentDirections.actionDetail(newsList[position].id.toString(), 0)
+            val action = HomeFragmentDirections.actionDetail(newsList[position].id.toString())
             Navigation.findNavController(it).navigate(action)
         }
     }

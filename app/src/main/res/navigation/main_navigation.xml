@@ -26,9 +26,6 @@
             android:id="@+id/actionHome"
             app:destination="@id/itemHome"
             app:popUpTo="@id/itemHome" />
-        <argument
-            android:name="page"
-            app:argType="integer" />
         <action
             android:id="@+id/actionPage"
             app:destination="@id/detailFragment" />
