@@ -17,8 +17,8 @@
     <fragment
         android:id="@+id/detailFragment"
         android:name="com.ubaya.a160421050_uts_anmp.view.DetailFragment"
-        android:label="fragment_detail"
-        tools:layout="@layout/fragment_detail" >
+        android:label="DETAIL"
+        tools:layout="@layout/fragment_detail">
         <argument
             android:name="news_id"
             app:argType="string" />
@@ -26,9 +26,6 @@
             android:id="@+id/actionHome"
             app:destination="@id/itemHome"
             app:popUpTo="@id/itemHome" />
-        <action
-            android:id="@+id/actionPage"
-            app:destination="@id/detailFragment" />
     </fragment>
     <fragment
         android:id="@+id/itemProfile"

@@ -61,7 +61,7 @@ class ProfileFragment : Fragment() {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity)
         val iduser = sharedPreferences.getInt("id_user", 0)
         viewModel.userLD.observe(viewLifecycleOwner, Observer {
-
+            binding.txtUname.setText(viewModel.userLD.value?.username)
             binding.txtFname.setText(viewModel.userLD.value?.fname)
             binding.txtLname.setText(viewModel.userLD.value?.lname)
 
