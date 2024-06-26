@@ -25,13 +25,28 @@ import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
 class UserViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
+    val allUserLD = MutableLiveData<List<User>>()
     val userLD = MutableLiveData<User>()
     private var job = Job()
+
+    fun fetchAll() {
+        launch {
+            val db = NewsDatabase.buildDatabase(getApplication())
+            allUserLD.postValue(db.newsDao().selectAllUser())
+        }
+    }
 
     fun fetch(id:Int) {
         launch {
             val db = NewsDatabase.buildDatabase(getApplication())
             userLD.postValue(db.newsDao().selectUser(id))
+        }
+    }
+
+    fun newUser(user: User) {
+        launch {
+            val db = NewsDatabase.buildDatabase(getApplication())
+            db.newsDao().newUser(user)
         }
     }
 

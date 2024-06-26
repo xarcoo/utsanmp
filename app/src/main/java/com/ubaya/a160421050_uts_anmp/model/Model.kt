@@ -25,6 +25,7 @@ data class News(
     var title:String?,
     var description: String?,
     var category:String?,
+    var image:String?,
     var author:Int?,
 ) {
     @PrimaryKey(autoGenerate = true)

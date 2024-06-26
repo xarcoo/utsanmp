@@ -25,7 +25,7 @@ class DetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val idNews:String
+        val idNews:Int
 
         viewModel = ViewModelProvider(this).get(DetailViewModel::class.java)
 

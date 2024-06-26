@@ -13,7 +13,7 @@ interface NewsDao {
     fun insertNews(vararg news: News)
 
     @Query("SELECT * FROM news ORDER BY id")
-    fun selectAllNews(): ArrayList<News>
+    fun selectAllNews(): List<News>
 
     @Query("SELECT * FROM news WHERE id = :id")
     fun selectNews(id:Int): News
@@ -24,8 +24,11 @@ interface NewsDao {
     @Delete
     fun deleteNews(news: News)
 
+    @Insert
+    fun newUser(user: User)
+
     @Query("SELECT * FROM users ORDER BY id")
-    fun selectAllUser(): ArrayList<User>
+    fun selectAllUser(): List<User>
 
     @Query("SELECT * FROM users WHERE id = :id")
     fun selectUser(id:Int): User
@@ -34,5 +37,5 @@ interface NewsDao {
     fun updateUser(user: User)
 
     @Query("SELECT * FROM pages WHERE news_id = :id")
-    fun selectDetail(id:Int): ArrayList<Page>
+    fun selectDetail(id:Int): List<Page>
 }

@@ -62,21 +62,17 @@ class ProfileFragment : Fragment() {
         val iduser = sharedPreferences.getInt("id_user", 0)
         viewModel.userLD.observe(viewLifecycleOwner, Observer {
             binding.txtUname.setText(viewModel.userLD.value?.username)
-            binding.txtFname.setText(viewModel.userLD.value?.fname)
-            binding.txtLname.setText(viewModel.userLD.value?.lname)
 
-            val student = it
+            val account = it
             binding.btnSave?.setOnClickListener {
-                var fname = binding.txtFname.text.toString()
-                var lname = binding.txtLname.text.toString()
                 var oldPw = binding.txtOldPassword.text.toString()
                 var newPw = binding.txtNewPassword.text.toString()
                 var renewPw = binding.txtRePassword.text.toString()
 
                 if (!oldPw.isEmpty()&&!newPw.isEmpty()&&!renewPw.isEmpty()) {
-                    if (oldPw == student.password.toString()) {
+                    if (oldPw == account.password.toString()) {
                         if (newPw == renewPw) {
-                            viewModel.updateUser(iduser, fname, lname, newPw)
+                            viewModel.updateUser(account)
                             Toast.makeText(activity, "User data successfully changed", Toast.LENGTH_SHORT).show()
                         } else {
                             Toast.makeText(activity, "New Password doesn't match with the reenter new password", Toast.LENGTH_SHORT).show()

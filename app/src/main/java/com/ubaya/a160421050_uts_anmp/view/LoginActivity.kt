@@ -6,19 +6,24 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.ubaya.a160421050_uts_anmp.databinding.ActivityLoginBinding
 import com.ubaya.a160421050_uts_anmp.model.User
+import com.ubaya.a160421050_uts_anmp.viewmodel.UserViewModel
 import org.json.JSONObject
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var viewModel: UserViewModel
     val accounts:ArrayList<User> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
 
         val isLogin = sharedPreferences.getBoolean("login", false)
@@ -30,33 +35,9 @@ class LoginActivity : AppCompatActivity() {
             setContentView(binding.root)
         }
 
-        val q = Volley.newRequestQueue(this@LoginActivity)
-        val url = "http://10.0.2.2/ANMP/users.php"
-        var stringRequest = StringRequest(
-            Request.Method.POST, url, {
-                Log.d("apiresult", it)
-                val obj = JSONObject(it)
-                if(obj.getString("result") == "OK") {
-                    val data = obj.getJSONArray("data")
-                    for(i in 0 until data.length()) {
-                        val playObj = data.getJSONObject(i)
-                        val users = User(
-                            playObj.getInt("id"),
-                            playObj.getString("username"),
-                            playObj.getString("fname"),
-                            playObj.getString("lname"),
-                            playObj.getString("email"),
-                            playObj.getString("password")
-                        )
-                        accounts.add(users)
-                    }
-                }
-                Log.d("cekisiarray", accounts.toString())
-            },
-            {
-                Log.e("apiresult", it.message.toString())
-            })
-        q.add(stringRequest)
+        viewModel.fetchAll()
+        // error di sini, karena viewmodel alluserldnya null
+//        accounts = viewModel.allUserLD.value!!
 
         binding.btnLogin.setOnClickListener {
             var username = binding.txtUsername.text.toString()

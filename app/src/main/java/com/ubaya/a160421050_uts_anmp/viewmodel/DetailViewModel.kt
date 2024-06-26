@@ -26,8 +26,8 @@ import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
 class DetailViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
-    val detailLD = MutableLiveData<ArrayList<Page>>()
-    val userLD = MutableLiveData<ArrayList<User>>()
+    val detailLD = MutableLiveData<List<Page>>()
+    val userLD = MutableLiveData<List<User>>()
     private var job = Job()
 
     fun fetch(id:Int) {

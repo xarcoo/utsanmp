@@ -37,12 +37,12 @@ class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): R
         holder.binding.txtDesc.text = newsList[position].description
 
         holder.binding.btnRead.setOnClickListener {
-            val action = HomeFragmentDirections.actionDetail(newsList[position].id.toString())
+            val action = HomeFragmentDirections.actionDetail(newsList[position].id)
             Navigation.findNavController(it).navigate(action)
         }
     }
 
-    fun updateNewsList(newNewsList:ArrayList<News>) {
+    fun updateNewsList(newNewsList:List<News>) {
         newsList.clear()
         newsList.addAll(newNewsList)
         notifyDataSetChanged()
