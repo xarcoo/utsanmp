@@ -13,35 +13,28 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.a160421050_uts_anmp.model.News
+import com.ubaya.a160421050_uts_anmp.model.NewsDatabase
 import com.ubaya.a160421050_uts_anmp.model.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.json.JSONObject
+import kotlin.coroutines.CoroutineContext
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
-    val newsLD = MutableLiveData<ArrayList<News>>()
+class HomeViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
+    val newsLD = MutableLiveData<List<News>>()
     val news:ArrayList<News> = ArrayList()
+    private var job = Job()
 
-    val TAG = "volleyTag"
-    private var queue: RequestQueue? = null
 
     fun refresh() {
-        queue = Volley.newRequestQueue(getApplication())
-        val url = "http://10.0.2.2/ANMP/basketball.php"
-
-        val stringRequest = StringRequest(
-            Request.Method.POST, url, Response.Listener<String> {
-                val sType = object : TypeToken<List<News>>() {}.type
-                val result = Gson().fromJson<List<News>>(it, sType)
-
-                newsLD.value = result as ArrayList<News>
-
-                Log.d("Home", it)
-            },
-            Response.ErrorListener {
-                Log.e("apiresult", it.message.toString())
-            }
-        )
-
-        stringRequest.tag = TAG
-        queue?.add(stringRequest)
+        launch {
+            val db = NewsDatabase.buildDatabase(getApplication())
+            newsLD.postValue(db.newsDao().selectAllNews())
+        }
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 }

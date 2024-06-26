@@ -15,70 +15,34 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.ubaya.a160421050_uts_anmp.model.NewsDatabase
 import com.ubaya.a160421050_uts_anmp.model.User
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.json.JSONObject
+import kotlin.coroutines.CoroutineContext
 
-class UserViewModel(application: Application, savedStateHandle: SavedStateHandle) : AndroidViewModel(application) {
+class UserViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
     val userLD = MutableLiveData<User>()
-    val TAG = "volleyTag"
-
-    private var queue: RequestQueue? = null
+    private var job = Job()
 
     fun fetch(id:Int) {
-        queue = Volley.newRequestQueue(getApplication())
-        val url = "http://10.0.2.2/ANMP/users.php"
-
-        val stringRequest = StringRequest(
-            Request.Method.POST, url, Response.Listener<String> {
-                val obj = JSONObject(it)
-                if(obj.getString("result") == "OK") {
-                    val data = obj.getJSONArray("data")
-
-                    for(i in 0 until data.length()) {
-                        val playObj = data.getJSONObject(i)
-                        if(playObj.getInt("id")==id){
-                            userLD.value = User(
-                                playObj.getInt("id"),
-                                playObj.getString("username"),
-                                playObj.getString("fname"),
-                                playObj.getString("lname"),
-                                playObj.getString("email"),
-                                playObj.getString("password")
-                            )
-                        }
-                    }
-                }
-//                userLD.value = result as User
-
-                Log.d("show_volley", it)
-            },
-            Response.ErrorListener {
-                Log.e("apiresult", it.message.toString())
-            }
-        )
-
-        stringRequest.tag = TAG
-        queue?.add(stringRequest)
-    }
-
-    fun updateUser(id:Int, fname:String, lname:String, pw:String) {
-        queue = Volley.newRequestQueue(getApplication())
-        val url = "http://10.0.2.2/ANMP/update_user.php"
-
-        val stringRequest = object : StringRequest(Request.Method.POST, url, {
-                Log.d("Update Success", it)
-            }, {
-                Log.d("Update Failed", it.message.toString()) }) {
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String, String>()
-                params["id"] = id.toString()
-                params["fname"] = fname
-                params["lname"] = lname
-                params["password"] = pw
-                return params
-            }
+        launch {
+            val db = NewsDatabase.buildDatabase(getApplication())
+            userLD.postValue(db.newsDao().selectUser(id))
         }
-        stringRequest.tag = TAG
-        queue?.add(stringRequest)
     }
+
+    fun updateUser(user: User) {
+        launch {
+            val db = NewsDatabase.buildDatabase(getApplication())
+            db.newsDao().updateUser(user)
+            userLD.postValue(db.newsDao().selectUser(user.id))
+        }
+    }
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 }
