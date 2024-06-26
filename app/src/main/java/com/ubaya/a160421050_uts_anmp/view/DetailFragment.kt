@@ -42,11 +42,11 @@ class DetailFragment : Fragment() {
             var page = 0
             var length = it.size
 
-            Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-            binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-            binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-            binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-            binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
+//            Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
+//            binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
+//            binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
+//            binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
+//            binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
 
             if (page == 0) {
                 binding.btnNext.isEnabled = true
@@ -59,11 +59,11 @@ class DetailFragment : Fragment() {
             binding.btnPrev.setOnClickListener {
                 page -= 1
 
-                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-                binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
+//                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
+//                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
+//                binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
+//                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
+//                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
 
                 if (page == 0) {
                     binding.btnNext.isEnabled = true
@@ -77,11 +77,11 @@ class DetailFragment : Fragment() {
             binding.btnNext.setOnClickListener {
                 page += 1
 
-                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-                binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
+//                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
+//                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
+//                binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
+//                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
+//                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
 
                 if (page == 0) {
                     binding.btnNext.isEnabled = true

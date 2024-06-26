@@ -17,7 +17,7 @@ class HomeFragment : Fragment() {
     private lateinit var viewModel: HomeViewModel
     private lateinit var binding: FragmentHomeBinding
 
-    private val homeListAdapter = HomeAdapter(arrayListOf())
+    private val homeListAdapter = HomeAdapter(arrayListOf(), arrayListOf())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -14,35 +14,30 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.ubaya.a160421050_uts_anmp.model.News
+import com.ubaya.a160421050_uts_anmp.model.NewsDatabase
 import com.ubaya.a160421050_uts_anmp.model.Page
+import com.ubaya.a160421050_uts_anmp.model.User
 import com.ubaya.a160421050_uts_anmp.view.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import org.json.JSONObject
+import kotlin.coroutines.CoroutineContext
 
-class DetailViewModel(application: Application) : AndroidViewModel(application) {
+class DetailViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
     val detailLD = MutableLiveData<ArrayList<Page>>()
-//    val detailAllLD = MutableLiveData<ArrayList<Page>>()
-    val TAG = "volleyTag"
-    private var queue: RequestQueue? = null
+    val userLD = MutableLiveData<ArrayList<User>>()
+    private var job = Job()
 
-    fun fetch(id:String) {
-        queue = Volley.newRequestQueue(getApplication())
-        val url = "http://10.0.2.2/ANMP/detail.php?id=${id}"
-
-        val stringRequest = StringRequest(
-            Request.Method.GET, url, {
-                val sType = object : TypeToken<List<Page>>() {}.type
-                val result = Gson().fromJson<List<Page>>(it, sType)
-
-                detailLD.value = result as ArrayList<Page>
-
-                Log.d("Detail", it)
-            },
-            {
-                Log.e("apiresult", it.message.toString())
-            }
-        )
-
-        stringRequest.tag = TAG
-        queue?.add(stringRequest)
+    fun fetch(id:Int) {
+        launch {
+            val db = NewsDatabase.buildDatabase(getApplication())
+            detailLD.postValue(db.newsDao().selectDetail(id))
+            userLD.postValue(db.newsDao().selectAllUser())
+        }
     }
+
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.IO
 }

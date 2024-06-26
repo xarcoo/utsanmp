@@ -12,8 +12,8 @@ fun buildDb(context: Context): NewsDatabase {
     return db
 }
 
-val MIGRATION_1_2 = object : Migration (1, 2) {
+val MIGRATION_1_2 = object : Migration(1,2) {
     override fun migrate(db: SupportSQLiteDatabase) {
-        db.execSQL("ALTER TABLE news ADD COLUMN image TEXT not null")
+        db.execSQL("ALTER TABLE news ADD COLUMN image TEXT")
     }
 }

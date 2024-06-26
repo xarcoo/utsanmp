@@ -23,15 +23,15 @@ import org.json.JSONObject
 import kotlin.coroutines.CoroutineContext
 
 class HomeViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
-    val newsLD = MutableLiveData<List<News>>()
-    val news:ArrayList<News> = ArrayList()
+    val newsLD = MutableLiveData<ArrayList<News>>()
+    val userLD = MutableLiveData<ArrayList<User>>()
     private var job = Job()
-
 
     fun refresh() {
         launch {
             val db = NewsDatabase.buildDatabase(getApplication())
             newsLD.postValue(db.newsDao().selectAllNews())
+            userLD.postValue(db.newsDao().selectAllUser())
         }
     }
 

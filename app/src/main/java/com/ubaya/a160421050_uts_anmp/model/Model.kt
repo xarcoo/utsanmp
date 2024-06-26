@@ -10,7 +10,7 @@ import androidx.room.Relation
 import com.google.gson.annotations.SerializedName
 import java.sql.Date
 
-@Entity
+@Entity(tableName = "users")
 data class User(
     var username:String?,
     var email:String?,
@@ -20,7 +20,7 @@ data class User(
     var id:Int = 0
 }
 
-@Entity(foreignKeys = [ForeignKey(entity = User::class, parentColumns = ["id"], childColumns = ["author"], onDelete = CASCADE)])
+@Entity(tableName = "news", foreignKeys = [ForeignKey(entity = User::class, parentColumns = arrayOf("id"), childColumns = arrayOf("author"), onDelete = CASCADE)])
 data class News(
     var title:String?,
     var description: String?,
@@ -31,7 +31,7 @@ data class News(
     var id:Int = 0
 }
 
-@Entity(foreignKeys = [ForeignKey(entity = News::class, parentColumns = ["id"], childColumns = ["news_id"], onDelete = CASCADE)])
+@Entity(tableName = "pages", foreignKeys = [ForeignKey(entity = News::class, parentColumns = arrayOf("id"), childColumns = arrayOf("news_id"), onDelete = CASCADE)])
 data class Page(
     var title:String?,
     var descr:String?,

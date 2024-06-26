@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ubaya.a160421050_uts_anmp.util.DB_NAME
 
-@Database(entities = arrayOf(News::class, User::class, Page::class), version = 1)
+@Database(entities = arrayOf(User::class, News::class, Page::class), version = 1)
 abstract class NewsDatabase:RoomDatabase() {
     abstract fun newsDao(): NewsDao
 
@@ -14,7 +14,8 @@ abstract class NewsDatabase:RoomDatabase() {
         @Volatile private var instance: NewsDatabase ?= null
         private val LOCK = Any()
 
-        fun buildDatabase(context: Context) = Room.databaseBuilder(context.applicationContext, NewsDatabase::class.java, DB_NAME)
+        fun buildDatabase(context: Context) = Room.databaseBuilder(context.applicationContext, NewsDatabase::class.java,
+            DB_NAME)
             .build()
 
         operator fun invoke(context: Context) {

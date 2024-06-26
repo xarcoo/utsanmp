@@ -12,21 +12,27 @@ interface NewsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNews(vararg news: News)
 
-    @Query("SELECT * FROM news ORDER BY id DESC")
-    fun selectAllNews(): List<News>
+    @Query("SELECT * FROM news ORDER BY id")
+    fun selectAllNews(): ArrayList<News>
 
     @Query("SELECT * FROM news WHERE id = :id")
     fun selectNews(id:Int): News
 
-    @Update
+    @Update()
     fun updateNews(news: News)
 
     @Delete
     fun deleteNews(news: News)
 
-    @Query("SELECT * FROM user WHERE id = :id")
+    @Query("SELECT * FROM users ORDER BY id")
+    fun selectAllUser(): ArrayList<User>
+
+    @Query("SELECT * FROM users WHERE id = :id")
     fun selectUser(id:Int): User
 
-    @Update
+    @Update()
     fun updateUser(user: User)
+
+    @Query("SELECT * FROM pages WHERE news_id = :id")
+    fun selectDetail(id:Int): ArrayList<Page>
 }
