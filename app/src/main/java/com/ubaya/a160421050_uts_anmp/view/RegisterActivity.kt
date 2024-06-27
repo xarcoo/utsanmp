@@ -60,6 +60,10 @@ class RegisterActivity : AppCompatActivity() {
                     Toast.makeText(this, "Please insert all data", Toast.LENGTH_SHORT).show()
                 }
             }
+
+            Toast.makeText(this, "Sign Up Success", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
         }
     }
 }

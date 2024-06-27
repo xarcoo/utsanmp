@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -18,7 +19,7 @@ import org.json.JSONObject
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var viewModel: UserViewModel
-    val accounts:ArrayList<User> = ArrayList()
+    var accounts:ArrayList<User> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,13 @@ class LoginActivity : AppCompatActivity() {
 
         viewModel.fetchAll()
         // error di sini, karena viewmodel alluserldnya null
-//        accounts = viewModel.allUserLD.value!!
+//        accounts = viewModel.allUserLD.value
+
+        viewModel.allUserLD.observe(this, Observer { users ->
+            users?.let {
+                accounts = it as ArrayList<User>
+            }
+        })
 
         binding.btnLogin.setOnClickListener {
             var username = binding.txtUsername.text.toString()
