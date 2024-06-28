@@ -8,3 +8,9 @@ interface ButtonReadClickListener{
 interface UsernameAuthor{
     fun getUsername(authorId:Int) :String
 }
+interface PageNextClickListener{
+    fun onPageNextClick(v:View)
+}
+interface PagePrevClickListener{
+    fun onPagePrevClick(v:View)
+}
