@@ -30,10 +30,18 @@ class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): R
         picasso.listener { picasso, uri, exception ->
             exception.printStackTrace()
         }
-//        picasso.build().load(newsList[position].image).into(holder.binding.imageView)
+        picasso.build().load(newsList[position].image).into(holder.binding.imageView)
 
         holder.binding.txtTitle.text = newsList[position].title
-        holder.binding.txtAuthor.text = userList[newsList[position].author!!].username.toString() //dk tau bener apa engga
+        val idUser = newsList[position].author;
+        var authorName = ""
+        for (user in userList) {
+            if (user.id == idUser) {
+                authorName = user.username!!
+                break
+            }
+        }
+        holder.binding.txtAuthor.text = authorName
         holder.binding.txtDesc.text = newsList[position].description
 
         holder.binding.btnRead.setOnClickListener {
@@ -45,6 +53,11 @@ class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): R
     fun updateNewsList(newNewsList:List<News>) {
         newsList.clear()
         newsList.addAll(newNewsList)
+        notifyDataSetChanged()
+    }
+    fun updateUserList(newUserList:List<User>) {
+        userList.clear()
+        userList.addAll(newUserList)
         notifyDataSetChanged()
     }
 }

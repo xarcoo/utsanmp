@@ -43,5 +43,8 @@ class HomeFragment : Fragment() {
         viewModel.newsLD.observe(viewLifecycleOwner, Observer {
             homeListAdapter.updateNewsList(it)
         })
+        viewModel.userLD.observe(viewLifecycleOwner, Observer {
+            homeListAdapter.updateUserList(it)
+        })
     }
 }

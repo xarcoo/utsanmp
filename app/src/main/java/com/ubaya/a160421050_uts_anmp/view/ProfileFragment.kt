@@ -72,8 +72,12 @@ class ProfileFragment : Fragment() {
                 if (!oldPw.isEmpty()&&!newPw.isEmpty()&&!renewPw.isEmpty()) {
                     if (oldPw == account.password.toString()) {
                         if (newPw == renewPw) {
+                            account.password = newPw
                             viewModel.updateUser(account)
                             Toast.makeText(activity, "User data successfully changed", Toast.LENGTH_SHORT).show()
+                            binding.txtOldPassword.setText("")
+                            binding.txtNewPassword.setText("")
+                            binding.txtRePassword.setText("")
                         } else {
                             Toast.makeText(activity, "New Password doesn't match with the reenter new password", Toast.LENGTH_SHORT).show()
                         }
