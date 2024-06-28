@@ -13,7 +13,7 @@ import com.ubaya.a160421050_uts_anmp.model.News
 import com.ubaya.a160421050_uts_anmp.model.User
 import java.lang.Exception
 
-class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): RecyclerView.Adapter<HomeAdapter.HomeViewHolder>() {
+class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): RecyclerView.Adapter<HomeAdapter.HomeViewHolder>(), ButtonReadClickListener, UsernameAuthor {
     class HomeViewHolder(var binding: NewsItemBinding):RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HomeViewHolder {
@@ -26,28 +26,31 @@ class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): R
     }
 
     override fun onBindViewHolder(holder: HomeViewHolder, position: Int) {
-        val picasso = Picasso.Builder(holder.itemView.context)
-        picasso.listener { picasso, uri, exception ->
-            exception.printStackTrace()
-        }
-        picasso.build().load(newsList[position].image).into(holder.binding.imageView)
-
-        holder.binding.txtTitle.text = newsList[position].title
-        val idUser = newsList[position].author;
-        var authorName = ""
-        for (user in userList) {
-            if (user.id == idUser) {
-                authorName = user.username!!
-                break
-            }
-        }
-        holder.binding.txtAuthor.text = authorName
-        holder.binding.txtDesc.text = newsList[position].description
-
-        holder.binding.btnRead.setOnClickListener {
-            val action = HomeFragmentDirections.actionDetail(newsList[position].id)
-            Navigation.findNavController(it).navigate(action)
-        }
+        holder.binding.news = newsList[position]
+        holder.binding.listener = this
+        holder.binding.author = this
+//        val picasso = Picasso.Builder(holder.itemView.context)
+//        picasso.listener { picasso, uri, exception ->
+//            exception.printStackTrace()
+//        }
+//        picasso.build().load(newsList[position].image).into(holder.binding.imageView)
+//
+//        holder.binding.txtTitle.text = newsList[position].title
+//        val idUser = newsList[position].author;
+//        var authorName = ""
+//        for (user in userList) {
+//            if (user.id == idUser) {
+//                authorName = user.username!!
+//                break
+//            }
+//        }
+//        holder.binding.txtAuthor.text = authorName
+//        holder.binding.txtDesc.text = newsList[position].description
+//
+//        holder.binding.btnRead.setOnClickListener {
+//            val action = HomeFragmentDirections.actionDetail(newsList[position].id)
+//            Navigation.findNavController(it).navigate(action)
+//        }
     }
 
     fun updateNewsList(newNewsList:List<News>) {
@@ -59,5 +62,22 @@ class HomeAdapter(val newsList:ArrayList<News>, val userList:ArrayList<User>): R
         userList.clear()
         userList.addAll(newUserList)
         notifyDataSetChanged()
+    }
+
+    override fun onButtonReadClick(v: View) {
+        val action = HomeFragmentDirections.actionDetail(v.tag.toString().toInt())
+        Navigation.findNavController(v).navigate(action)
+    }
+
+    override fun getUsername(authorId: Int):String {
+        var authorName = ""
+        for (user in userList) {
+            if (user.id == authorId) {
+                authorName = user.username!!
+                return authorName
+                break
+            }
+        }
+        return authorName
     }
 }
