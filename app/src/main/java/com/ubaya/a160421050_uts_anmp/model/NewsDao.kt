@@ -38,4 +38,9 @@ interface NewsDao {
 
     @Query("SELECT * FROM pages WHERE news_id = :id")
     fun selectDetail(id:Int): List<Page>
+    @Query("SELECT news.title, news.description, news.category, news.image, users.username as author " +
+            "FROM news " +
+            "INNER JOIN users ON news.author = users.id " +
+            "WHERE news.id = :id")
+    fun selectNewDetail(id:Int): New
 }

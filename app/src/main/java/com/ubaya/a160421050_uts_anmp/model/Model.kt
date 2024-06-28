@@ -42,3 +42,11 @@ data class Page(
     @PrimaryKey(autoGenerate = true)
     var id:Int = 0
 }
+
+data class New(
+    var title:String?,
+    var description: String?,
+    var category:String?,
+    var image:String?,
+    var author:String?,
+)

@@ -2,6 +2,7 @@ package com.ubaya.a160421050_uts_anmp.view
 
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +16,8 @@ class DetailFragment : Fragment(), PageNextClickListener, PagePrevClickListener{
     private lateinit var viewModel: DetailViewModel
     private lateinit var binding: FragmentDetailBinding
     
-    v
+    var page = 0
+    var length = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,70 +38,70 @@ class DetailFragment : Fragment(), PageNextClickListener, PagePrevClickListener{
 
             viewModel.fetch(idNews)
         }
+        binding.listenerNext = this
+        binding.listenerPrev = this
         observeViewModel()
+
+
     }
 
     fun observeViewModel() {
+        viewModel.newLD.observe(viewLifecycleOwner, Observer {
+            binding.news = it
+        })
         viewModel.detailLD.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 page = 0
                 length = it.size
 
-//                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-//            binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-//            binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-//            binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-//            binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
+                for (i in it.indices) {
+                    if (i == page) {
+                        binding.page = it[i]
+                        break
+                    }
+                }
 
-                if (page == 0) {
+                if (page+1 == 1) {
                     binding.btnNext.isEnabled = true
                     binding.btnPrev.isEnabled = false
-                } else if (page+1 == length) {
+                } else if (page+1>1 && page+1<length) {
+                    binding.btnNext.isEnabled = true
+                    binding.btnPrev.isEnabled = true
+                } else if (page+1== length) {
                     binding.btnNext.isEnabled = false
                     binding.btnPrev.isEnabled = true
                 }
 
-//                binding.btnPrev.setOnClickListener {
-//                    page -= 1
-//
-//                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-//                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-//                binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-//                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-//                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
-//
-//                    if (page == 0) {
-//                        binding.btnNext.isEnabled = true
-//                        binding.btnPrev.isEnabled = false
-//                    } else if (page+1 == length) {
-//                        binding.btnNext.isEnabled = false
-//                        binding.btnPrev.isEnabled = true
-//                    }
-//                }
-
-//                binding.btnNext.setOnClickListener {
-//                    page += 1
-//
-//                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-//                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-//                binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-//                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-//                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
-//
-//                    if (page == 0) {
-//                        binding.btnNext.isEnabled = true
-//                        binding.btnPrev.isEnabled = false
-//                    } else if (page+1 == length) {
-//                        binding.btnNext.isEnabled = false
-//                        binding.btnPrev.isEnabled = true
-//                    }
-//                }
             }
         })
     }
 
     override fun onPageNextClick(v: View) {
-        page += 1
+        this.page += 1
+
+        viewModel.detailLD.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                length = it.size
+                for (i in it.indices) {
+                    if (i == page) {
+                        binding.page = it[i]
+                        break
+                    }
+                }
+
+                if (page+1 == 1) {
+                    binding.btnNext.isEnabled = true
+                    binding.btnPrev.isEnabled = false
+                } else if (page+1>1 && page+1<length) {
+                    binding.btnNext.isEnabled = true
+                    binding.btnPrev.isEnabled = true
+                } else if (page+1== length) {
+                    binding.btnNext.isEnabled = false
+                    binding.btnPrev.isEnabled = true
+                }
+
+            }
+        })
 
 //                Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
 //                binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
@@ -107,30 +109,39 @@ class DetailFragment : Fragment(), PageNextClickListener, PagePrevClickListener{
 //                binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
 //                binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
 
-        if (page == 0) {
-            binding.btnNext.isEnabled = true
-            binding.btnPrev.isEnabled = false
-        } else if (page+1 == length) {
-            binding.btnNext.isEnabled = false
-            binding.btnPrev.isEnabled = true
-        }
     }
 
     override fun onPagePrevClick(v: View) {
         page -= 1
+        viewModel.detailLD.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                length = it.size
 
-        Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
-        binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
-        binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
-        binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
-        binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
-    
-        if (page == 0) {
-            binding.btnNext.isEnabled = true
-            binding.btnPrev.isEnabled = false
-        } else if (page+1 == length) {
-            binding.btnNext.isEnabled = false
-            binding.btnPrev.isEnabled = true
-        }
+                for (i in it.indices) {
+                    if (i == page) {
+                        binding.page = it[i]
+                        break
+                    }
+                }
+
+                if (page+1 == 1) {
+                    binding.btnNext.isEnabled = true
+                    binding.btnPrev.isEnabled = false
+                } else if (page+1>1 && page+1<length) {
+                    binding.btnNext.isEnabled = true
+                    binding.btnPrev.isEnabled = true
+                } else if (page+1== length) {
+                    binding.btnNext.isEnabled = false
+                    binding.btnPrev.isEnabled = true
+                }
+
+            }
+        })
+//        Picasso.get().load(viewModel.detailLD.value?.get(page)?.image).into(binding.imageView)
+//        binding.txtTitle.text = viewModel.detailLD.value?.get(page)?.newsTitle
+//        binding.txtAuthor.text = viewModel.detailLD.value?.get(page)?.author
+//        binding.txtPageTitle.text = viewModel.detailLD.value?.get(page)?.title
+//        binding.txtDesc.text = viewModel.detailLD.value?.get(page)?.descr
+
     }
 }

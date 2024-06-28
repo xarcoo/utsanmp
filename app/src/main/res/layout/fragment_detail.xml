@@ -8,14 +8,14 @@
             name="page"
             type="com.ubaya.a160421050_uts_anmp.model.Page" />
         <variable
-            name="author"
-            type="com.ubaya.a160421050_uts_anmp.view.UsernameAuthor" />
+            name="news"
+            type="com.ubaya.a160421050_uts_anmp.model.New" />
         <variable
             name="listenerNext"
-            type="com.ubaya.a160421050_uts_anmp.view.ButtonNextClickListener" />
+            type="com.ubaya.a160421050_uts_anmp.view.PageNextClickListener" />
         <variable
             name="listenerPrev"
-            type="com.ubaya.a160421050_uts_anmp.view.ButtonPrevClickListener" />
+            type="com.ubaya.a160421050_uts_anmp.view.PagePrevClickListener" />
     </data>
 
     <FrameLayout
@@ -60,7 +60,7 @@
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:scaleType="centerCrop"
-                        android:imageUrl="@{page.image}"
+                        android:imageUrl="@{news.image}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="@{page.title}"
+                        android:text="@{news.author}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
@@ -113,7 +113,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:text="next"
-                        android:onClick="@{listenerNext::onButtonNextClick}"
+                        android:onClick="@{listenerNext::onPageNextClick}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -124,7 +124,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginBottom="16dp"
                         android:text="prev"
-                        android:onClick="@{listenerPrev::onButtonPrevClick}"
+                        android:onClick="@{listenerPrev::onPagePrevClick}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/btnNext" />
 
@@ -134,7 +134,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="24dp"
                         android:fontFamily="sans-serif-condensed"
-                        android:text="TextView"
+                        android:text="@{news.category}"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         app:layout_constraintStart_toStartOf="@+id/txtAuthor"

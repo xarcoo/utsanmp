@@ -13,6 +13,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.ubaya.a160421050_uts_anmp.model.New
 import com.ubaya.a160421050_uts_anmp.model.News
 import com.ubaya.a160421050_uts_anmp.model.NewsDatabase
 import com.ubaya.a160421050_uts_anmp.model.Page
@@ -28,12 +29,14 @@ import kotlin.coroutines.CoroutineContext
 class DetailViewModel(application: Application) : AndroidViewModel(application), CoroutineScope {
     val detailLD = MutableLiveData<List<Page>>()
     val userLD = MutableLiveData<List<User>>()
+    val newLD = MutableLiveData<New>()
     private var job = Job()
 
     fun fetch(id:Int) {
         launch {
             val db = NewsDatabase.buildDatabase(getApplication())
             detailLD.postValue(db.newsDao().selectDetail(id))
+            newLD.postValue(db.newsDao().selectNewDetail(id))
             userLD.postValue(db.newsDao().selectAllUser())
         }
     }
