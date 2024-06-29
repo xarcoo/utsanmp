@@ -27,7 +27,7 @@ interface NewsDao {
     @Insert
     fun newUser(user: User)
 
-    @Query("SELECT * FROM users ORDER BY id")
+    @Query("SELECT * FROM users")
     fun selectAllUser(): List<User>
 
     @Query("SELECT * FROM users WHERE id = :id")

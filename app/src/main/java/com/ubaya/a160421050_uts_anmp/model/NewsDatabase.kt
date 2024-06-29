@@ -6,8 +6,9 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.ubaya.a160421050_uts_anmp.util.DB_NAME
 import com.ubaya.a160421050_uts_anmp.util.MIGRATION_1_2
+import com.ubaya.a160421050_uts_anmp.util.MIGRATION_2_3
 
-@Database(entities = arrayOf(User::class, News::class, Page::class), version = 2)
+@Database(entities = arrayOf(User::class, News::class, Page::class), version = 3)
 abstract class NewsDatabase:RoomDatabase() {
     abstract fun newsDao(): NewsDao
 
@@ -17,7 +18,7 @@ abstract class NewsDatabase:RoomDatabase() {
 
         fun buildDatabase(context: Context) = Room.databaseBuilder(context.applicationContext, NewsDatabase::class.java,
             DB_NAME)
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
 
         operator fun invoke(context: Context) {

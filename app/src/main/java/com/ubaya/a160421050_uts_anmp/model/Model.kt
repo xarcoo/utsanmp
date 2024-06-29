@@ -36,7 +36,6 @@ data class News(
 data class Page(
     var title:String?,
     var descr:String?,
-    var image:String?,
     var news_id:Int?,
 ) {
     @PrimaryKey(autoGenerate = true)
