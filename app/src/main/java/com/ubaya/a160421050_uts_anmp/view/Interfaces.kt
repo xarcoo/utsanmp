@@ -14,3 +14,7 @@ interface PageNextClickListener{
 interface PagePrevClickListener{
     fun onPagePrevClick(v:View)
 }
+
+interface ButtonLogoutListener {
+    fun onButtonLogoutClick(v: View)
+}

@@ -21,7 +21,7 @@ import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.schedulers.Schedulers
 import java.util.concurrent.TimeUnit
 
-class ProfileFragment : Fragment() {
+class ProfileFragment : Fragment(), ButtonLogoutListener {
     private lateinit var viewModel: UserViewModel
     private lateinit var binding: FragmentProfileBinding
 
@@ -30,18 +30,6 @@ class ProfileFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
-
-        binding.btnLogOut.setOnClickListener {
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
-            sharedPreferences.edit().putBoolean("login", false).apply()
-            val logout = sharedPreferences.edit()
-            logout.remove("id_user")
-            logout.apply()
-
-            val intent = Intent(requireContext(), LoginActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
-        }
 
         return binding.root
     }
@@ -54,6 +42,8 @@ class ProfileFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         viewModel.fetch(iduser)
 
+        binding.btnLogoutListener = this
+
         observeViewModel()
     }
 
@@ -63,8 +53,9 @@ class ProfileFragment : Fragment() {
         viewModel.userLD.observe(viewLifecycleOwner, Observer {
             binding.txtUname.setText(viewModel.userLD.value?.username)
 
-            val account = it
+            var account = it
             binding.btnSave?.setOnClickListener {
+                var email = binding.txtEmail.text.toString()
                 var oldPw = binding.txtOldPassword.text.toString()
                 var newPw = binding.txtNewPassword.text.toString()
                 var renewPw = binding.txtRePassword.text.toString()
@@ -72,6 +63,7 @@ class ProfileFragment : Fragment() {
                 if (!oldPw.isEmpty()&&!newPw.isEmpty()&&!renewPw.isEmpty()) {
                     if (oldPw == account.password.toString()) {
                         if (newPw == renewPw) {
+                            account.email = email
                             account.password = newPw
                             viewModel.updateUser(account)
                             Toast.makeText(activity, "User data successfully changed", Toast.LENGTH_SHORT).show()
@@ -89,5 +81,17 @@ class ProfileFragment : Fragment() {
                 }
             }
         })
+    }
+
+    override fun onButtonLogoutClick(v: View) {
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(requireContext())
+        sharedPreferences.edit().putBoolean("login", false).apply()
+        val logout = sharedPreferences.edit()
+        logout.remove("id_user")
+        logout.apply()
+
+        val intent = Intent(requireContext(), LoginActivity::class.java)
+        startActivity(intent)
+        requireActivity().finish()
     }
 }

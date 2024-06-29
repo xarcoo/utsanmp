@@ -38,17 +38,18 @@ class DetailFragment : Fragment(), PageNextClickListener, PagePrevClickListener{
 
             viewModel.fetch(idNews)
         }
+
         binding.listenerNext = this
         binding.listenerPrev = this
+
         observeViewModel()
-
-
     }
 
     fun observeViewModel() {
         viewModel.newLD.observe(viewLifecycleOwner, Observer {
             binding.news = it
         })
+
         viewModel.detailLD.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 page = 0
@@ -71,7 +72,6 @@ class DetailFragment : Fragment(), PageNextClickListener, PagePrevClickListener{
                     binding.btnNext.isEnabled = false
                     binding.btnPrev.isEnabled = true
                 }
-
             }
         })
     }
