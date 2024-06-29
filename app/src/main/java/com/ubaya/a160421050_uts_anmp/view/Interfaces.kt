@@ -18,3 +18,11 @@ interface PagePrevClickListener{
 interface ButtonLogoutListener {
     fun onButtonLogoutClick(v: View)
 }
+
+interface ButtonLoginListener {
+    fun onButtonLoginClick(v: View)
+}
+
+interface ButtonSignUpListener {
+    fun onButtonSignUpClick(v: View)
+}

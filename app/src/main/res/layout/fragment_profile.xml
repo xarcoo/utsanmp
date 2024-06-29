@@ -9,7 +9,7 @@
             type="com.ubaya.a160421050_uts_anmp.model.User" />
 
         <variable
-            name="btnLogoutListener"
+            name="logoutListener"
             type="com.ubaya.a160421050_uts_anmp.view.ButtonLogoutListener" />
     </data>
 
@@ -51,7 +51,7 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@{user.email}"
+                    android:text="@={user.email}"
                     android:hint="Email" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -110,8 +110,7 @@
                     android:id="@+id/txtRePassword"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Reenter New Password"
-                    android:text="@{user.password}" />
+                    android:hint="Reenter New Password"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -131,7 +130,7 @@
                 android:layout_marginStart="24dp"
                 android:layout_marginTop="32dp"
                 android:text="LOG OUT"
-                android:onClick="@{btnLogoutListener::onButtonLogoutClick}"
+                android:onClick="@{logoutListener::onButtonLogoutClick}"
                 app:icon="@drawable/material_symbols__logout_rounded"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textInputLayout13" />
