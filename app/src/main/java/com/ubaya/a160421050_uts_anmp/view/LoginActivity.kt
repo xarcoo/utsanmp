@@ -35,6 +35,7 @@ class LoginActivity : AppCompatActivity(), ButtonLoginListener, ButtonSignUpList
 
         viewModel.fetchAll()
 
+        binding.user = User("", "", "")
         binding.loginListener = this
         binding.signUpListener = this
 
@@ -51,8 +52,8 @@ class LoginActivity : AppCompatActivity(), ButtonLoginListener, ButtonSignUpList
 
     override fun onButtonLoginClick(v: View) {
         val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        var username = binding.txtUsername.text.toString()
-        var password = binding.txtPassword.text.toString()
+        var username = binding.user!!.username!!
+        var password = binding.user!!.password!!
         var status = false
 
         if (username.isEmpty() || password.isEmpty()){

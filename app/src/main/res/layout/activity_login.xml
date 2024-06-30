@@ -5,6 +5,10 @@
 
     <data>
         <variable
+            name="user"
+            type="com.ubaya.a160421050_uts_anmp.model.User" />
+
+        <variable
             name="loginListener"
             type="com.ubaya.a160421050_uts_anmp.view.ButtonLoginListener" />
 
@@ -47,7 +51,8 @@
                 android:id="@+id/txtUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Username" />
+                android:hint="Username"
+                android:text="@={user.username}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -66,7 +71,8 @@
                 android:id="@+id/txtPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password" />
+                android:hint="Password"
+                android:text="@={user.password}"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
@@ -85,7 +91,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="new here?"
+            android:text="New here?"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/btnSignUp"
             app:layout_constraintEnd_toEndOf="parent"
