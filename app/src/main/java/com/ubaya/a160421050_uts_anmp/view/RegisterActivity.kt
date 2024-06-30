@@ -18,18 +18,20 @@ class RegisterActivity : AppCompatActivity(), ButtonSignUpListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegisterBinding.inflate(layoutInflater)
-        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
         setContentView(binding.root)
 
-        viewModel.fetchAll()
-
+        binding.user = User("", "", "")
         binding.signUpListener = this
+
+        viewModel = ViewModelProvider(this).get(UserViewModel::class.java)
+        viewModel.fetchAll()
     }
 
     override fun onButtonSignUpClick(v: View) {
-        var username = binding.txtUsername.text.toString()
-        var email = binding.txtEmail.text.toString()
-        var password = binding.txtPassword.text.toString()
+        var username = binding.user!!.username!!
+        var email = binding.user!!.email!!
+        var password = binding.user!!.password!!
+
         var repassword = binding.txtRePassword.text.toString()
         var usrSame=false
 
@@ -44,8 +46,10 @@ class RegisterActivity : AppCompatActivity(), ButtonSignUpListener {
         }else{
             if(!username.isEmpty()&&!email.isEmpty()&&!password.isEmpty()&&!repassword.isEmpty()){
                 if(password==repassword){
-                    viewModel.newUser(User(username, email, password))
-
+                    viewModel.newUser(binding.user!!)
+                    Toast.makeText(this, "Sign Up Success", Toast.LENGTH_SHORT).show()
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
                 }else{
                     Toast.makeText(this, "Password and Repassword must be the same ", Toast.LENGTH_SHORT).show()
                 }
@@ -54,9 +58,5 @@ class RegisterActivity : AppCompatActivity(), ButtonSignUpListener {
                 Toast.makeText(this, "Please insert all data", Toast.LENGTH_SHORT).show()
             }
         }
-
-        Toast.makeText(this, "Sign Up Success", Toast.LENGTH_SHORT).show()
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
     }
 }
